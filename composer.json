@@ -1,0 +1,20 @@
+{
+    "name": "triga/backend",
+    "description": "Simple admin panel.",
+    "keywords": ["admin", "panel"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kamil Fojuth",
+            "email": "fojuth@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpspec/phpspec": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "TrigaBackend\\": "src/"
+        }
+    }
+}
