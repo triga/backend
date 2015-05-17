@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: TrigaBackend
+        psr4_prefix: TrigaBackend
