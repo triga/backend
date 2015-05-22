@@ -26,5 +26,25 @@ class QueryBuilder {
 
         return $this;
     }
+
+    /**
+     * Returns an array of columns fetched by the query.
+     *
+     * @return array
+     */
+    public function getColumns()
+    {
+        return $this->query->columns;
+    }
+
+    /**
+     * Returns the query results.
+     *
+     * @return array
+     */
+    public function getResults()
+    {
+        return $this->query->get();
+    }
     
 }

@@ -68,9 +68,18 @@ class RecordList implements RenderInterface
      */
     public function render()
     {
-        return $this->view->make($this->getViewPath());
+        return $this->view->make($this->getViewPath(), [
+            'columns' => $this->queryBuilder->getColumns(),
+            'results' => $this->queryBuilder->getResults(),
+        ]);
     }
 
+    /**
+     * Sets the view path.
+     *
+     * @param string $viewPath
+     * @return $this
+     */
     public function setViewPath($viewPath)
     {
         $this->viewPath = $viewPath;
@@ -78,6 +87,11 @@ class RecordList implements RenderInterface
         return $this;
     }
 
+    /**
+     * Returns the view path.
+     *
+     * @return string
+     */
     public function getViewPath()
     {
         return $this->viewPath;
