@@ -42,4 +42,29 @@ class SortingSpec extends ObjectBehavior
 
         $this->getOrderDir()->shouldReturn('asc');
     }
+
+    function it_should_return_the_opposite_sorting_dir(Request $request)
+    {
+        $request->get('order_dir')->willReturn('desc');
+
+        $this->getOppositeOrderDir()->shouldReturn('asc');
+
+        $request->get('order_dir')->willReturn('asc');
+
+        $this->getOppositeOrderDir()->shouldReturn('desc');
+    }
+
+    function it_should_return_the_current_sorting_column(Request $request)
+    {
+        $request->get('order_by')->willReturn('email');
+
+        $this->getOrderColumn()->shouldReturn('email');
+    }
+
+    function it_should_return_the_default_sorting_column_if_not_set(Request $request)
+    {
+        $request->get('order_by')->willReturn(null);
+
+        $this->getOrderColumn()->shouldReturn('id');
+    }
 }
