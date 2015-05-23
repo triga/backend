@@ -35,16 +35,38 @@ class RecordList implements RenderInterface
     private $filterManager;
 
     /**
+     * Sorting manager.
+     *
+     * @var Sorting
+     */
+    private $sorting;
+
+    /**
+     * URL builder.
+     *
+     * @var Url
+     */
+    private $url;
+
+    /**
      * View manager.
      *
      * @var View
      */
     private $view;
 
-    public function __construct(QueryBuilder $queryBuilder, Filter $filterManager, View $view)
+    public function __construct(
+        QueryBuilder $queryBuilder,
+        Filter $filterManager,
+        Sorting $sorting,
+        Url $url,
+        View $view
+    )
     {
         $this->queryBuilder = $queryBuilder;
         $this->filterManager = $filterManager;
+        $this->sorting = $sorting;
+        $this->url = $url;
         $this->view = $view;
     }
 
@@ -71,6 +93,9 @@ class RecordList implements RenderInterface
         return $this->view->make($this->getViewPath(), [
             'columns' => $this->queryBuilder->getColumns(),
             'results' => $this->queryBuilder->getResults(),
+            'order_dir' => $this->sorting->getOrderDir(),
+            'order_by' => $this->sorting->getOrderColumn(),
+            'url_builder' => $this->url,
         ]);
     }
 

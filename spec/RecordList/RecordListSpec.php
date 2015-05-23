@@ -6,13 +6,15 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use TrigaBackend\RecordList\QueryBuilder;
 use TrigaBackend\RecordList\Filter;
+use TrigaBackend\RecordList\Sorting;
+use TrigaBackend\RecordList\Url;
 use Illuminate\View\Factory as View;
 
 class RecordListSpec extends ObjectBehavior
 {
-    function let(QueryBuilder $queryBuilder, Filter $filterManager, View $view)
+    function let(QueryBuilder $queryBuilder, Filter $filterManager, Sorting $sorting, Url $url, View $view)
     {
-        $this->beConstructedWith($queryBuilder, $filterManager, $view);
+        $this->beConstructedWith($queryBuilder, $filterManager, $sorting, $url, $view);
     }
 
     function it_is_initializable()
