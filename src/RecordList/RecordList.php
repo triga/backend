@@ -68,6 +68,9 @@ class RecordList implements RenderInterface
         $this->sorting = $sorting;
         $this->url = $url;
         $this->view = $view;
+
+        $this->queryBuilder->setSorting($sorting);
+        $this->queryBuilder->setFilterManager($filterManager);
     }
 
     /**
@@ -120,5 +123,19 @@ class RecordList implements RenderInterface
     public function getViewPath()
     {
         return $this->viewPath;
+    }
+
+    /**
+     * Registers a query filter.
+     *
+     * @param string $field
+     * @param callable $filterFunction
+     * @return $this
+     */
+    public function filter($field, callable $filterFunction)
+    {
+        $this->filterManager->registerFilter($field, $filterFunction);
+
+        return $this;
     }
 }

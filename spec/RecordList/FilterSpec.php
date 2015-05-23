@@ -18,6 +18,10 @@ class FilterSpec extends ObjectBehavior
             $query->where('email', '=', $value);
         });
 
+        $this->registerFilter('email', function($query, $value) {
+            $query->where('email', '!=', $value);
+        });
+
         $this->registerFilter('name', function($query, $value) {
             $query->where('name', '=', $value);
         });
