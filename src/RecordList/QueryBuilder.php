@@ -75,7 +75,7 @@ class QueryBuilder
         if (true === empty($this->results) || true === $force) {
             $this->results = $this->compile();
         }
-        var_dump($this->query->toSql());
+        
         return $this->results;
     }
 
