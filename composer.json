@@ -11,7 +11,8 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "5.*"
+        "illuminate/support": "5.*",
+        "rcrowe/twigbridge": "0.7.x"
     },
     "require-dev": {
         "phpspec/phpspec": "dev-master"

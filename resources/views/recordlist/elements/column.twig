@@ -1,0 +1,13 @@
+<th>
+    <span>
+        {{ column }}
+    </span>
+
+    {#@if($column === $order_by and 'desc' === $order_dir) {{ ' active' }}; @endif#}
+
+    {#@if($column === $order_by and 'asc' === $order_dir) {{ ' active' }}; @endif#}
+
+    {#<a class="order-dir order-desc{{ order_desc_active }}" href="#">[DESC]</a>#}
+    {#<a class="order-dir order-asc{{ order_asc_active }}" href="#">[ASC]</a>#}
+    {#<a class="order-dir order-asc{% if order_by == column and order_dir == 'asc' %} active{% endif %}" href="{{ order[column].asc }}">[ASC]</a>/#}
+</th>
