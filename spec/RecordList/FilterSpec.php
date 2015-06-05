@@ -14,15 +14,15 @@ class FilterSpec extends ObjectBehavior
 
     function it_should_register_filters()
     {
-        $this->registerFilter('email', function($query, $value) {
+        $this->registerFilter('email', function ($query, $value) {
             $query->where('email', '=', $value);
         });
 
-        $this->registerFilter('email', function($query, $value) {
+        $this->registerFilter('email', function ($query, $value) {
             $query->where('email', '!=', $value);
         });
 
-        $this->registerFilter('name', function($query, $value) {
+        $this->registerFilter('name', function ($query, $value) {
             $query->where('name', '=', $value);
         });
 

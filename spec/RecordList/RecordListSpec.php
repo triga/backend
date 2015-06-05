@@ -23,7 +23,8 @@ class RecordListSpec extends ObjectBehavior
         $this->shouldHaveType('TrigaBackend\Contract\RenderInterface');
     }
 
-    public function it_should_allow_to_set_custom_view(){
+    public function it_should_allow_to_set_custom_view()
+    {
         $this->setViewPath('foo.bar');
 
         $this->getViewPath()->shouldBe('foo.bar');

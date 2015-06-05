@@ -19,7 +19,8 @@ class UrlSpec extends ObjectBehavior
         $this->shouldHaveType('TrigaBackend\RecordList\Url');
     }
 
-    function it_should_append_sorting_data(Request $request) {
+    function it_should_append_sorting_data(Request $request)
+    {
         $request->url()->willReturn('http://foo.dev');
 
         $expectedResult = sprintf('http://foo.dev/?%s=%s&%s=%s', Sorting::ORDER_BY_KEY, 'name', Sorting::ORDER_DIR_KEY, Sorting::ORDER_DESC);

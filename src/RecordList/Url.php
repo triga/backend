@@ -48,7 +48,8 @@ class Url
      *
      * @return string
      */
-    protected function getUrl(){
+    protected function getUrl()
+    {
         if (true === empty($this->url)) {
             $this->url = $this->request->url();
         }
