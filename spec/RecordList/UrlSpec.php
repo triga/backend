@@ -21,9 +21,9 @@ class UrlSpec extends ObjectBehavior
 
     function it_should_append_sorting_data(Request $request)
     {
-        $request->url()->willReturn('http://foo.dev');
+        $request->url()->willReturn('http://foo.dev/bar/baz');
 
-        $expectedResult = sprintf('http://foo.dev/?%s=%s&%s=%s', Sorting::ORDER_BY_KEY, 'name', Sorting::ORDER_DIR_KEY, Sorting::ORDER_DESC);
+        $expectedResult = sprintf('http://foo.dev/bar/baz/?%s=%s&%s=%s', Sorting::ORDER_BY_KEY, 'name', Sorting::ORDER_DIR_KEY, Sorting::ORDER_DESC);
 
         $this->get('name', Sorting::ORDER_DESC)->shouldReturn($expectedResult);
     }
