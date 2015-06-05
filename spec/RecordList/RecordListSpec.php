@@ -23,10 +23,22 @@ class RecordListSpec extends ObjectBehavior
         $this->shouldHaveType('TrigaBackend\Contract\RenderInterface');
     }
 
-    public function it_should_allow_to_set_custom_view()
+    function it_should_allow_to_set_custom_view()
     {
         $this->setViewPath('foo.bar');
 
         $this->getViewPath()->shouldBe('foo.bar');
+    }
+
+    function it_should_register_filters(Filter $filterManager)
+    {
+        $callbackFoo = function () {};
+        $callbackBar = function () {};
+
+        $filterManager->registerFilter('foo', $callbackFoo)->shouldBeCalled();
+        $filterManager->registerFilter('bar', $callbackBar)->shouldBeCalled();
+
+        $this->filter('foo', $callbackFoo);
+        $this->filter('bar', $callbackBar);
     }
 }
