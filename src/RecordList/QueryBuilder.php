@@ -128,6 +128,9 @@ class QueryBuilder
         return $this;
     }
 
+    /**
+     * Applies all registed filters which keywords are set in the request.
+     */
     protected function applyFilters()
     {
         foreach ($this->filterManager->getFilters() as $field => $filter) {
