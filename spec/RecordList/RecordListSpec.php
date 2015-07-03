@@ -4,6 +4,7 @@ namespace spec\TrigaBackend\RecordList;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use TrigaBackend\RecordList\Decorator;
 use TrigaBackend\RecordList\Paginator;
 use TrigaBackend\RecordList\QueryBuilder;
 use TrigaBackend\RecordList\Filter;
@@ -13,9 +14,9 @@ use Illuminate\View\Factory as View;
 
 class RecordListSpec extends ObjectBehavior
 {
-    function let(QueryBuilder $queryBuilder, Filter $filterManager, Sorting $sorting, Url $url, View $view, Paginator $paginator)
+    function let(QueryBuilder $queryBuilder, Filter $filterManager, Sorting $sorting, Url $url, View $view, Paginator $paginator, Decorator $decorator)
     {
-        $this->beConstructedWith($queryBuilder, $filterManager, $sorting, $url, $view, $paginator);
+        $this->beConstructedWith($queryBuilder, $filterManager, $sorting, $url, $view, $paginator, $decorator);
     }
 
     function it_is_initializable()

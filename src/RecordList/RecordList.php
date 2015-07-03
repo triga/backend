@@ -60,13 +60,19 @@ class RecordList implements RenderInterface
      */
     protected $paginator;
 
+    /**
+     * @var Decorator
+     */
+    protected $decorator;
+
     public function __construct(
         QueryBuilder $queryBuilder,
         Filter $filterManager,
         Sorting $sorting,
         Url $url,
         View $view,
-        Paginator $paginator
+        Paginator $paginator,
+        Decorator $decorator
     )
     {
         $this->queryBuilder = $queryBuilder;
@@ -75,6 +81,7 @@ class RecordList implements RenderInterface
         $this->url = $url;
         $this->view = $view;
         $this->paginator = $paginator;
+        $this->decorator = $decorator;
 
         $this->queryBuilder->setSorting($sorting);
         $this->queryBuilder->setPaginator($paginator);
@@ -101,9 +108,13 @@ class RecordList implements RenderInterface
      */
     public function render()
     {
+        $results = $this->queryBuilder->getResults();
+
+        $results = $this->decorator->decorate($results);
+
         return $this->view->make($this->getViewPath(), [
             'columns' => $this->queryBuilder->getColumns(),
-            'results' => $this->queryBuilder->getResults(),
+            'results' => $results,
             'order_dir' => $this->sorting->getOrderDir(),
             'order_by' => $this->sorting->getOrderColumn(),
             'url_builder' => $this->url,
@@ -143,6 +154,20 @@ class RecordList implements RenderInterface
     public function filter($field, callable $filterFunction)
     {
         $this->filterManager->registerFilter($field, $filterFunction);
+
+        return $this;
+    }
+
+    /**
+     * Registers a field decorator.
+     *
+     * @param string $field
+     * @param callable $decoratorFunction
+     * @return $this
+     */
+    public function decorate($field, callable $decoratorFunction)
+    {
+        $this->decorator->registerFieldDecorator($field, $decoratorFunction);
 
         return $this;
     }
