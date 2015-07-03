@@ -34,7 +34,12 @@ class QueryBuilder
     /**
      * @var Request
      */
-    private $request;
+    protected $request;
+
+    /**
+     * @var Paginator
+     */
+    protected $paginator;
 
     public function __construct(Request $request)
     {
@@ -75,7 +80,7 @@ class QueryBuilder
         if (true === empty($this->results) || true === $force) {
             $this->results = $this->compile();
         }
-        
+
         return $this->results;
     }
 
@@ -89,7 +94,7 @@ class QueryBuilder
         $this->applySorting()
             ->applyFilters();
 
-        return $this->query->get();
+        return $this->query->paginate($this->paginator->getRecordLimiPerPage());
     }
 
     /**
@@ -101,6 +106,19 @@ class QueryBuilder
     public function setSorting(Sorting $sorting)
     {
         $this->sorting = $sorting;
+
+        return $this;
+    }
+
+    /**
+     * Registers the paginator.
+     *
+     * @param Paginator $paginator
+     * @return $this
+     */
+    public function setPaginator(Paginator $paginator)
+    {
+        $this->paginator = $paginator;
 
         return $this;
     }

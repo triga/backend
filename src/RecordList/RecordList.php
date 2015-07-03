@@ -18,49 +18,55 @@ class RecordList implements RenderInterface
      *
      * @var string
      */
-    private $viewPath = 'trigabackend::recordlist.recordlist';
+    protected $viewPath = 'trigabackend::recordlist.recordlist';
 
     /**
      * Query builder.
      *
      * @var QueryBuilder
      */
-    private $queryBuilder;
+    protected $queryBuilder;
 
     /**
      * Query filter manager.
      *
      * @var Filter
      */
-    private $filterManager;
+    protected $filterManager;
 
     /**
      * Sorting manager.
      *
      * @var Sorting
      */
-    private $sorting;
+    protected $sorting;
 
     /**
      * URL builder.
      *
      * @var Url
      */
-    private $url;
+    protected $url;
 
     /**
      * View manager.
      *
      * @var View
      */
-    private $view;
+    protected $view;
+
+    /**
+     * @var Paginator
+     */
+    protected $paginator;
 
     public function __construct(
         QueryBuilder $queryBuilder,
         Filter $filterManager,
         Sorting $sorting,
         Url $url,
-        View $view
+        View $view,
+        Paginator $paginator
     )
     {
         $this->queryBuilder = $queryBuilder;
@@ -68,8 +74,10 @@ class RecordList implements RenderInterface
         $this->sorting = $sorting;
         $this->url = $url;
         $this->view = $view;
+        $this->paginator = $paginator;
 
         $this->queryBuilder->setSorting($sorting);
+        $this->queryBuilder->setPaginator($paginator);
         $this->queryBuilder->setFilterManager($filterManager);
     }
 
@@ -135,6 +143,19 @@ class RecordList implements RenderInterface
     public function filter($field, callable $filterFunction)
     {
         $this->filterManager->registerFilter($field, $filterFunction);
+
+        return $this;
+    }
+
+    /**
+     * Sets the record page limit (records per page).
+     *
+     * @param $perPage
+     * @return $this
+     */
+    public function setPageLimit($perPage)
+    {
+        $this->paginator->setRecordLimiPerPage($perPage);
 
         return $this;
     }
