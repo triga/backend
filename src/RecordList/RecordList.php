@@ -118,6 +118,7 @@ class RecordList implements RenderInterface
             'order_dir' => $this->sorting->getOrderDir(),
             'order_by' => $this->sorting->getOrderColumn(),
             'url_builder' => $this->url,
+            'pagination' => $this->paginator->render($results),
         ]);
     }
 
