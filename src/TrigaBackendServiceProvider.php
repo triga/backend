@@ -18,6 +18,10 @@ class TrigaBackendServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views'), 'trigabackend');
+
+        $this->publishes([
+            __DIR__.'/../public/layout' => public_path('vendor/triga/backend'),
+        ], 'public');
     }
 
 }
