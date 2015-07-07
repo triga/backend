@@ -37,7 +37,7 @@ class Url
     public function get($orderBy, $orderDir)
     {
         $query = http_build_query(array_merge(
-            [Sorting::ORDER_BY_KEY => $orderBy, Sorting::ORDER_DIR_KEY => $orderDir]
+            [Sorting::ORDER_BY_KEY => $orderBy, Sorting::ORDER_DIR_KEY => $orderDir, 'page' => $this->request->get('page', 1)]
         ));
 
         return $this->getUrl() . '/?' . $query;
