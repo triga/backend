@@ -7,7 +7,7 @@ class Breadcrumbs implements RenderInterface
 {
 
     /**
-     * Registered route names.
+     * Route names to be used in breadcrumbs.
      *
      * @var array
      */
@@ -18,14 +18,23 @@ class Breadcrumbs implements RenderInterface
      */
     protected $router;
 
+    /**
+     * Routes registered in the application.
+     *
+     * @var array
+     */
+    protected $registeredRoutes = [];
+
     public function __construct(Router $router)
     {
         $this->router = $router;
+        $this->registeredRoutes = $this->getRegisteredRoutes();
     }
 
     public function render()
     {
-        dd($this->router->getRoutes());
+//        $routes = $this->getRegisteredRoutes();
+
         return 'foo crumbs!';
     }
 
@@ -43,6 +52,10 @@ class Breadcrumbs implements RenderInterface
 
         foreach ($this->routeNames as $routeName) {
             $route = $routeCollection->getByName($routeName);
+
+            if (true === empty($route)) {
+                throw new \InvalidArgumentException(sprintf('Route "%s" does not exist', $routeName));
+            }
 
             $routes[$routeName] = $route->uri();
         }
