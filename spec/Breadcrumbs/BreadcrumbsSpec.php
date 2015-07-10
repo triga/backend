@@ -1,18 +1,14 @@
 <?php namespace spec\TrigaBackend\Breadcrumbs;
 
-use Illuminate\Routing\Route;
-use Illuminate\Routing\RouteCollection;
-use Illuminate\Routing\Router;
+use Illuminate\Routing\UrlGenerator;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class BreadcrumbsSpec extends ObjectBehavior
 {
-    function let(Router $router, RouteCollection $routeCollection)
+    function let(UrlGenerator $urlGenerator)
     {
-        $this->beConstructedWith($router);
-
-        $router->getRoutes()->shouldBeCalled()->willReturn($routeCollection);
+        $this->beConstructedWith($urlGenerator);
     }
 
     function it_is_initializable()
@@ -20,36 +16,21 @@ class BreadcrumbsSpec extends ObjectBehavior
         $this->shouldHaveType('TrigaBackend\Breadcrumbs\Breadcrumbs');
     }
 
-    function it_should_fetch_routes_by_names(RouteCollection $routeCollection, Route $route1, Route $route2)
+    function it_should_register_routes(UrlGenerator $urlGenerator)
     {
-        $route1->uri()->willReturn($fooUrl = 'http://dummy.com/foo');
-        $route2->uri()->willReturn($barUrl = 'http://dummy.com/foo/bar');
+        $fooUrl = 'http://dummy.com/foo';
 
-        $routeCollection->getByName('foo')->shouldBeCalled()->willReturn($route1);
-        $routeCollection->getByName('bar')->shouldBeCalled()->willReturn($route2);
+        $urlGenerator->route('foo', [])->willReturn($fooUrl);
 
-        $this->setRoute('foo');
-        $this->setRoute('bar');
+        $this->setRoute('foo', 'Title foo');
 
         $expected = [
-            'foo' => $fooUrl,
-            'bar' => $barUrl,
+            'foo' => [
+                'title' => 'Title foo',
+                'url' => $fooUrl,
+            ],
         ];
 
-        $this->getRegisteredRoutes()->shouldReturn($expected);
-    }
-
-    function it_should_throw_exception_when_registering_non_existing_route(RouteCollection $routeCollection)
-    {
-        $routeCollection->getByName('non-existing')->shouldBeCalled()->willReturn(null);
-
-        $this->setRoute('non-existing');
-
-        $this->shouldThrow(\InvalidArgumentException::class)->during('getRegisteredRoutes');
-    }
-
-    function it_should_handle_routes_with_params()
-    {
-
+        $this->getRoutes()->shouldReturn($expected);
     }
 }

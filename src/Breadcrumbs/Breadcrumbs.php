@@ -1,65 +1,65 @@
 <?php namespace TrigaBackend\Breadcrumbs;
 
-use Illuminate\Routing\Router;
+use Illuminate\Routing\UrlGenerator;
 use TrigaBackend\Contract\RenderInterface;
 
 class Breadcrumbs implements RenderInterface
 {
 
     /**
+     * Default view.
+     *
+     * @var string
+     */
+    protected $viewPath = 'trigabackend::breadcrumbs.breadcrumbs';
+
+    /**
      * Route names to be used in breadcrumbs.
      *
      * @var array
      */
-    protected $routeNames = [];
+    protected $routes = [];
 
     /**
-     * @var Router
+     * @var UrlGenerator
      */
-    protected $router;
+    protected $urlGenerator;
 
-    /**
-     * Routes registered in the application.
-     *
-     * @var array
-     */
-    protected $registeredRoutes = [];
-
-    public function __construct(Router $router)
+    public function __construct(UrlGenerator $urlGenerator)
     {
-        $this->router = $router;
-        $this->registeredRoutes = $this->getRegisteredRoutes();
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function render()
     {
-//        $routes = $this->getRegisteredRoutes();
-
-        return 'foo crumbs!';
+        return view($this->viewPath);
     }
 
-    public function setRoute($routeName)
+    public function setRoute($routeName, $title, array $params = [])
     {
-        $this->routeNames[] = $routeName;
+        $this->routes[$routeName] = [
+            'title' => $title,
+            'url' => $this->urlGenerator->route($routeName, $params),
+        ];
 
         return $this;
     }
 
-    public function getRegisteredRoutes()
+    public function getRoutes()
     {
-        $routes = [];
-        $routeCollection = $this->router->getRoutes();
+        return $this->routes;
+    }
 
-        foreach ($this->routeNames as $routeName) {
-            $route = $routeCollection->getByName($routeName);
+    /**
+     * Sets the view path.
+     *
+     * @param string $viewPath
+     * @return $this
+     */
+    public function setViewPath($viewPath)
+    {
+        $this->viewPath = $viewPath;
 
-            if (true === empty($route)) {
-                throw new \InvalidArgumentException(sprintf('Route "%s" does not exist', $routeName));
-            }
-
-            $routes[$routeName] = $route->uri();
-        }
-
-        return $routes;
+        return $this;
     }
 }
