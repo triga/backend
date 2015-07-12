@@ -1,0 +1,9 @@
+{% if item.isCurrent() %}
+    <li class="active">
+        <i class="fa {{ item.getIcon() }}"></i>  {{ item.getTitle() }}
+    </li>
+{% else %}
+    <li>
+        <i class="fa {{ item.getIcon() }}"></i>  <a href="{{ item.getUrl() }}">{{ item.getTitle() }}</a>
+    </li>
+{% endif %}
