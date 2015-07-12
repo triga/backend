@@ -1,8 +1,5 @@
 <ol class="breadcrumb">
-    <li>
-        <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
-    </li>
-    <li class="active">
-        <i class="fa fa-desktop"></i> Bootstrap Elements
-    </li>
+    {% for item in breadcrumbs %}
+        {{ item.render() }}
+    {% endfor %}
 </ol>

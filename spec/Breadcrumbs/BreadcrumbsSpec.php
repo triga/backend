@@ -3,6 +3,7 @@
 use Illuminate\Routing\UrlGenerator;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use TrigaBackend\Breadcrumbs\Item;
 
 class BreadcrumbsSpec extends ObjectBehavior
 {
@@ -22,15 +23,12 @@ class BreadcrumbsSpec extends ObjectBehavior
 
         $urlGenerator->route('foo', [])->willReturn($fooUrl);
 
-        $this->setRoute('foo', 'Title foo');
+        $this->setRoute('foo', $title = 'Title foo');
 
         $expected = [
-            'foo' => [
-                'title' => 'Title foo',
-                'url' => $fooUrl,
-            ],
+            new Item($title, $fooUrl),
         ];
 
-        $this->getRoutes()->shouldReturn($expected);
+        $this->getRoutes()->shouldBeLike($expected);
     }
 }
