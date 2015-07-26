@@ -1,4 +1,5 @@
 <?php namespace TrigaBackend\ViewBuilder;
+use TrigaBackend\Contract\RenderInterface;
 
 /**
  * Helper class making building the bavkend view easier.
@@ -11,14 +12,14 @@ class ViewOrganizer
     /**
      * Sidebar view.
      *
-     * @var string
+     * @var RenderInterface
      */
     protected $sideBar;
 
     /**
      * Main content view.
      *
-     * @var string
+     * @var RenderInterface
      */
     protected $mainContent;
 
@@ -32,12 +33,12 @@ class ViewOrganizer
     /**
      * Breadcrumbs view.
      *
-     * @var string
+     * @var RenderInterface
      */
     protected $breadCrumbs;
 
     /**
-     * @return string
+     * @return RenderInterface
      */
     public function getSideBar()
     {
@@ -45,7 +46,7 @@ class ViewOrganizer
     }
 
     /**
-     * @param string $sideBar
+     * @param RenderInterface $sideBar
      * @return $this
      */
     public function setSideBar($sideBar)
@@ -56,7 +57,7 @@ class ViewOrganizer
     }
 
     /**
-     * @return string
+     * @return RenderInterface
      */
     public function getMainContent()
     {
@@ -64,10 +65,10 @@ class ViewOrganizer
     }
 
     /**
-     * @param string $mainContent
+     * @param RenderInterface $mainContent
      * @return $this
      */
-    public function setMainContent($mainContent)
+    public function setMainContent(RenderInterface $mainContent)
     {
         $this->mainContent = $mainContent;
 
@@ -102,10 +103,10 @@ class ViewOrganizer
     }
 
     /**
-     * @param string $breadCrumbs
+     * @param RenderInterface $breadCrumbs
      * @return $this
      */
-    public function setBreadCrumbs($breadCrumbs)
+    public function setBreadCrumbs(RenderInterface $breadCrumbs)
     {
         $this->breadCrumbs = $breadCrumbs;
 

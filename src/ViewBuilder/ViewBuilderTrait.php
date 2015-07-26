@@ -25,9 +25,9 @@ trait ViewBuilderTrait
     {
         return view($this->layoutPath, [
             'header' => $viewOrganizer->getHeader(),
-            'side_bar' => $viewOrganizer->getSideBar(),
-            'breadcrumbs' => $viewOrganizer->getBreadCrumbs(),
-            'main_content' => $viewOrganizer->getMainContent(),
+            'side_bar' => $viewOrganizer->getSideBar()->render(),
+            'breadcrumbs' => $viewOrganizer->getBreadCrumbs()->render(),
+            'main_content' => $viewOrganizer->getMainContent()->render(),
         ]);
     }
 
