@@ -7,8 +7,8 @@ use \Illuminate\Http\Request;
  *
  * @package TrigaBackend\RecordList
  */
-class Sorting {
-
+class Sorting
+{
     /**
      * Order direction request key.
      */
@@ -35,6 +35,9 @@ class Sorting {
      */
     private $request;
 
+    /**
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;

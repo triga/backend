@@ -9,7 +9,6 @@ use \Illuminate\Http\Request;
  */
 class Url
 {
-
     /**
      * @var Request
      */
@@ -22,6 +21,9 @@ class Url
      */
     private $url;
 
+    /**
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;
@@ -36,11 +38,20 @@ class Url
      */
     public function get($orderBy, $orderDir)
     {
-        $query = http_build_query(array_merge(
+        $query = urldecode(http_build_query(array_merge(
+            $this->request->input(),
             [Sorting::ORDER_BY_KEY => $orderBy, Sorting::ORDER_DIR_KEY => $orderDir, 'page' => $this->request->get('page', 1)]
-        ));
+        )));
 
         return $this->getUrl() . '/?' . $query;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->request->all();
     }
 
     /**
