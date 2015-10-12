@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
  */
 class QueryBuilder
 {
-
     /**
      * @var Query
      */
@@ -41,6 +40,9 @@ class QueryBuilder
      */
     protected $paginator;
 
+    /**
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;
@@ -66,7 +68,19 @@ class QueryBuilder
      */
     public function getColumns()
     {
-        return $this->query->columns;
+        $columns = $this->query->columns;
+
+        foreach ($columns as $index => $column) {
+            if (false !== stripos($column, 'as')) {
+                $splitArray = preg_split("/\s\w{2}\s/", $column);
+                $columns[$index] = array_pop($splitArray);
+            } else if (false !== strpos($column, '.')) {
+                $splitArray = preg_split("/\./", $column);
+                $columns[$index] = array_pop($splitArray);
+            }
+        }
+
+        return $columns;
     }
 
     /**
@@ -94,7 +108,7 @@ class QueryBuilder
         $this->applySorting()
             ->applyFilters();
 
-        return $this->query->paginate($this->paginator->getRecordLimiPerPage());
+        return $this->query->paginate($this->paginator->getRecordLimitPerPage());
     }
 
     /**
@@ -162,5 +176,4 @@ class QueryBuilder
             }
         }
     }
-
 }
