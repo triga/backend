@@ -12,7 +12,6 @@ use TrigaBackend\Contract\RenderInterface;
  */
 class RecordList implements RenderInterface
 {
-
     /**
      * Default view.
      *
@@ -65,6 +64,20 @@ class RecordList implements RenderInterface
      */
     protected $decorator;
 
+    /**
+     * @var array
+     */
+    protected $columnHeaders = [];
+
+    /**
+     * @param QueryBuilder $queryBuilder
+     * @param Filter $filterManager
+     * @param Sorting $sorting
+     * @param Url $url
+     * @param View $view
+     * @param Paginator $paginator
+     * @param Decorator $decorator
+     */
     public function __construct(
         QueryBuilder $queryBuilder,
         Filter $filterManager,
@@ -73,8 +86,7 @@ class RecordList implements RenderInterface
         View $view,
         Paginator $paginator,
         Decorator $decorator
-    )
-    {
+    ) {
         $this->queryBuilder = $queryBuilder;
         $this->filterManager = $filterManager;
         $this->sorting = $sorting;
@@ -109,16 +121,16 @@ class RecordList implements RenderInterface
     public function render()
     {
         $results = $this->queryBuilder->getResults();
-
         $results = $this->decorator->decorate($results);
 
         return $this->view->make($this->getViewPath(), [
-            'columns' => $this->queryBuilder->getColumns(),
+            'columns' => $this->getColumns(),
             'results' => $results,
             'order_dir' => $this->sorting->getOrderDir(),
             'order_by' => $this->sorting->getOrderColumn(),
             'url_builder' => $this->url,
             'pagination' => $this->paginator->render($results),
+            'params' => $this->url->getParams(),
         ]);
     }
 
@@ -176,13 +188,51 @@ class RecordList implements RenderInterface
     /**
      * Sets the record page limit (records per page).
      *
-     * @param $perPage
+     * @param int $perPage
      * @return $this
      */
     public function setPageLimit($perPage)
     {
-        $this->paginator->setRecordLimiPerPage($perPage);
+        $this->paginator->setRecordLimitPerPage($perPage);
 
         return $this;
+    }
+
+    /**
+     * Sets columns headers to be displayed.
+     *
+     * @param array $columnHeaders
+     * @return $this
+     */
+    public function setColumnHeaders($columnHeaders)
+    {
+        $this->columnHeaders = $columnHeaders;
+
+        return $this;
+    }
+
+    /**
+     * Returns array of columns with proper headers and in proper order.
+     *
+     * @return array
+     */
+    protected function getColumns()
+    {
+        $columns = [];
+
+        foreach ($this->queryBuilder->getColumns() as $column) {
+            if (array_key_exists($column, $this->columnHeaders)) {
+                $columns[$column] = $this->columnHeaders[$column];
+            } else {
+                $columns[$column] = $column;
+            }
+        }
+
+        $sortOrderArray = array_values($this->columnHeaders);
+        uasort($columns, function($value1, $value2) use ($sortOrderArray) {
+            return (array_search($value1, $sortOrderArray) > array_search($value2, $sortOrderArray));
+        });
+
+        return $columns;
     }
 }
