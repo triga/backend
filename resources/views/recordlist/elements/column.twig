@@ -1,5 +1,5 @@
 <th>
-    <span>{{ column }}</span>
+    <span>{{ header }}</span>
     <a class="order-dir order-desc{% if order_by == column and order_dir == 'desc' %} active text-primary{% else %} text-muted{% endif %}" href="{{ url_builder.get(column, 'desc') }}"><i class="fa fa-caret-down"></i></a>
     <a class="order-dir order-asc{% if order_by == column and order_dir == 'asc' %} active text-primary{% else %} text-muted{% endif %}" href="{{ url_builder.get(column, 'asc') }}"><i class="fa fa-caret-up"></i></a>
 </th>

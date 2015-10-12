@@ -2,7 +2,7 @@
     <thead>
         <tr>
 
-            {% for column in columns %}
+            {% for column,header in columns %}
                 {% include 'trigabackend::recordlist.elements.column' %}
             {% endfor %}
 
@@ -14,7 +14,7 @@
 
             <tr>
 
-                {% for column in columns %}
+                {% for column in columns|keys %}
                     {% include 'trigabackend::recordlist.elements.cell' with {'value': attribute(result, column)} %}
                 {% endfor %}
 
