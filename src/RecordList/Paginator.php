@@ -20,19 +20,29 @@ class Paginator
      */
     protected $perPage = 20;
 
+    /**
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;
     }
 
-    public function setRecordLimiPerPage($perPage)
+    /**
+     * @param int|string $perPage
+     * @return $this
+     */
+    public function setRecordLimitPerPage($perPage)
     {
         $this->perPage = (int)$perPage;
 
         return $this;
     }
 
-    public function getRecordLimiPerPage()
+    /**
+     * @return int
+     */
+    public function getRecordLimitPerPage()
     {
         return $this->perPage;
     }

@@ -10,7 +10,6 @@ use Illuminate\Support\ServiceProvider;
  */
 class TrigaBackendServiceProvider extends ServiceProvider
 {
-
     public function register()
     {
     }
@@ -23,5 +22,4 @@ class TrigaBackendServiceProvider extends ServiceProvider
             __DIR__.'/../public/layout' => public_path('vendor/triga/backend'),
         ], 'public');
     }
-
 }

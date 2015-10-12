@@ -9,7 +9,6 @@ use TrigaBackend\Contract\RenderInterface;
  */
 class Item implements RenderInterface
 {
-
     /**
      * Displayed title.
      *
@@ -41,7 +40,7 @@ class Item implements RenderInterface
     /**
      * @param string $title
      * @param string $url
-     * @param string $icon
+     * @param string|null $icon
      */
     public function __construct($title, $url, $icon = null)
     {
@@ -82,16 +81,25 @@ class Item implements RenderInterface
         return $this->current;
     }
 
+    /**
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
+    /**
+     * @return string
+     */
     public function getUrl()
     {
         return $this->url;
     }
 
+    /**
+     * @return null|string
+     */
     public function getIcon()
     {
         return $this->icon;

@@ -1,4 +1,5 @@
 <?php namespace TrigaBackend\ViewBuilder;
+
 use TrigaBackend\Contract\RenderInterface;
 
 /**
@@ -8,7 +9,6 @@ use TrigaBackend\Contract\RenderInterface;
  */
 class ViewOrganizer
 {
-
     /**
      * Sidebar view.
      *
@@ -49,7 +49,7 @@ class ViewOrganizer
      * @param RenderInterface $sideBar
      * @return $this
      */
-    public function setSideBar($sideBar)
+    public function setSideBar(RenderInterface $sideBar)
     {
         $this->sideBar = $sideBar;
 

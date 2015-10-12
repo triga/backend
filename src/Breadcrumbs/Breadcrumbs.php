@@ -10,7 +10,6 @@ use TrigaBackend\Contract\RenderInterface;
  */
 class Breadcrumbs implements RenderInterface
 {
-
     /**
      * Default view.
      *
@@ -30,6 +29,9 @@ class Breadcrumbs implements RenderInterface
      */
     protected $urlGenerator;
 
+    /**
+     * @param UrlGenerator $urlGenerator
+     */
     public function __construct(UrlGenerator $urlGenerator)
     {
         $this->urlGenerator = $urlGenerator;
@@ -52,7 +54,7 @@ class Breadcrumbs implements RenderInterface
      *
      * @param string $routeName
      * @param string $title
-     * @param null $icon
+     * @param string|null $icon
      * @param array $routeParams
      * @return $this
      */

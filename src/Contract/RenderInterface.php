@@ -5,13 +5,12 @@
  *
  * @package TrigaBackend\Contract
  */
-interface RenderInterface {
-
+interface RenderInterface
+{
     /**
      * Returns a compiled view as a string.
      *
      * @return string
      */
     public function render();
-
 }

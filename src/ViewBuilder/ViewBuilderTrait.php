@@ -7,7 +7,6 @@
  */
 trait ViewBuilderTrait
 {
-
     /**
      * Default layout path.
      *
@@ -41,6 +40,10 @@ trait ViewBuilderTrait
         return new ViewOrganizer;
     }
 
+    /**
+     * @param string $path
+     * @return $this
+     */
     protected function setLayoutPath($path)
     {
         $this->layoutPath = $path;
