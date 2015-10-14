@@ -99,6 +99,14 @@ class QueryBuilder
     }
 
     /**
+     * @return int
+     */
+    public function getResultsCount()
+    {
+        return $this->query->getCountForPagination();
+    }
+
+    /**
      * Compiles and runs the query, then returns the results.
      *
      * @return array

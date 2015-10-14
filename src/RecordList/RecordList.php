@@ -1,5 +1,6 @@
 <?php namespace TrigaBackend\RecordList;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Query\Builder as Query;
 use Illuminate\View\Factory as View;
 use TrigaBackend\Contract\RenderInterface;
@@ -120,8 +121,8 @@ class RecordList implements RenderInterface
      */
     public function render()
     {
-        $results = $this->queryBuilder->getResults();
-        $results = $this->decorator->decorate($results);
+        /** @var LengthAwarePaginator $results */
+        $results = $this->getResults();
 
         return $this->view->make($this->getViewPath(), [
             'columns' => $this->getColumns(),
@@ -131,6 +132,7 @@ class RecordList implements RenderInterface
             'url_builder' => $this->url,
             'pagination' => $this->paginator->render($results),
             'params' => $this->url->getParams(),
+            'total' => $results->total(),
         ]);
     }
 
@@ -209,6 +211,25 @@ class RecordList implements RenderInterface
         $this->columnHeaders = $columnHeaders;
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getResults()
+    {
+        $results = $this->queryBuilder->getResults();
+        $results = $this->decorator->decorate($results);
+
+        return $results;
+    }
+
+    /**
+     * @return int
+     */
+    public function getResultsCount()
+    {
+        return $this->queryBuilder->getResultsCount();
     }
 
     /**
