@@ -115,6 +115,14 @@ class RecordList implements RenderInterface
     }
 
     /**
+     * @return QueryBuilder
+     */
+    public function getQueryBuilder()
+    {
+        return $this->queryBuilder;
+    }
+
+    /**
      * Returns a compiled view as a string.
      *
      * @return string
