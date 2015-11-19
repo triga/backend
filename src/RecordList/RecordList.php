@@ -88,7 +88,6 @@ class RecordList implements RenderInterface
         Paginator $paginator,
         Decorator $decorator
     ) {
-        $this->queryBuilder = $queryBuilder;
         $this->filterManager = $filterManager;
         $this->sorting = $sorting;
         $this->url = $url;
@@ -96,9 +95,7 @@ class RecordList implements RenderInterface
         $this->paginator = $paginator;
         $this->decorator = $decorator;
 
-        $this->queryBuilder->setSorting($sorting);
-        $this->queryBuilder->setPaginator($paginator);
-        $this->queryBuilder->setFilterManager($filterManager);
+        $this->setQueryBuilder($queryBuilder);
     }
 
     /**
@@ -112,6 +109,19 @@ class RecordList implements RenderInterface
         $this->queryBuilder->setQuery($query);
 
         return $this;
+    }
+
+    /**
+     * @param QueryBuilder $queryBuilder
+     * @return void
+     */
+    public function setQueryBuilder(QueryBuilder $queryBuilder)
+    {
+        $this->queryBuilder = $queryBuilder;
+
+        $this->queryBuilder->setSorting($this->sorting);
+        $this->queryBuilder->setPaginator($this->paginator);
+        $this->queryBuilder->setFilterManager($this->filterManager);
     }
 
     /**
