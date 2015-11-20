@@ -62,6 +62,14 @@ class QueryBuilder
     }
 
     /**
+     * @return Query
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
      * Returns an array of columns fetched by the query.
      *
      * @return array
